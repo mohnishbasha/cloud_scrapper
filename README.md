@@ -13,3 +13,7 @@ This README would normally document whatever steps are necessary to get your app
 * Install MySQL, create database cloud_scrapper
 * mvn clean install
 * java -jar target/cloud_scrapper-x.x.x.jar
+
+
+### License ###
+* MIT
