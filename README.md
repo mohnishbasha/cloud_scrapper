@@ -4,26 +4,12 @@ This README would normally document whatever steps are necessary to get your app
 
 ### What is this repository for? ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* Web application to scrape and visualize cloud resources
 
 ### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+* Install JDK, set JAVA_HOME
+* Install Maven, set M2_HOME
+* Install MySQL, create database cloud_scrapper
+* mvn clean install
+* java -jar target/cloud_scrapper-x.x.x.jar
