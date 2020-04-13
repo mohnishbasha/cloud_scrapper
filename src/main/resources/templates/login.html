@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+</head>
+
+<body>
+<nav th:replace="fragments/header :: nav">
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="card col-6 mx-auto" style="width: 20rem; margin-top: 120px;">
+            <div class="card-body">
+                <h4 class="card-title">Log in:</h4>
+                <p th:if="${loginError}"  class="alert alert-danger" role="alert">Wrong email or password</p>
+                <form th:action="@{/perform-login}" method="post">
+                    <div class="form-group">
+                        <label th:for="email">Email</label>
+                        <input type="text" class="form-control" th:id="email" name="email" th:name="email" aria-describedby="emailHelp" placeholder="Enter email">
+                    </div>
+                    <div class="form-group">
+                        <label th:for="password">Password</label>
+                        <input type="password" class="form-control" name="password" th:name="password" th:id="password" placeholder="Password">
+                    </div>
+                    <!--<label> Remember Me</label>-->
+                    <!--<input type="checkbox" name="remember-me" />-->
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                <p style="margin-top: 10px;">Don't have an account, <a href="/register">register!</a> </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+
+
+<div th:replace="fragments/jsScripts :: scripts"></div>
+
+
+</body>
+</html>

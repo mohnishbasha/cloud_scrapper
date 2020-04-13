@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+</head>
+<script src="https://use.fontawesome.com/c0c323679c.js"></script>
+
+
+<body >
+
+<nav th:replace="fragments/header :: nav"></nav>
+
+<!-- HOME SECTION -->
+<header id="home-section">
+	<div class="dark-overlay">
+		<div class="home-inner">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-10 d-none d-lg-block">
+						<div class="jumbotron" style="opacity: 0.9;">
+							<h2 class="display-4">MachineDB for your Cloud resources</h2>
+							<p class="lead">Scrape & visualize cloud resources.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+
+<!-- Footer -->
+<footer th:replace="fragments/footer :: footer"></footer>
+
+<div th:replace="fragments/jsScripts :: scripts"></div>
+
+</body>
+</html>
