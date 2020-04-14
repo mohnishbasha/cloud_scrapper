@@ -70,16 +70,15 @@ public class EC2Service {
 
 	@Async
 	public void scrapeResources(Account account, Scrape scrape) {
-		
-//		AwsCredentials credentials = AwsBasicCredentials.create("AKIAUW3AYKLYIA2KRIEV",
-//				"1Jx2l+Ivfn76s69OYjki38Di2hYnQr+68Q3SE/2E");
+
 		AwsCredentials credentials = AwsBasicCredentials.create(account.getAccessKey(), account.getSecretAccessKey());
 		AwsCredentialsProvider credentialsProvider = StaticCredentialsProvider.create(credentials);
 		List<EC2> models = Collections.synchronizedList(new ArrayList<>());
 
+		// Region.regions().stream().filter(r -> !r.isGlobalRegion()).forEach(region -> {
 		Region.regions().stream().filter(r -> !r.isGlobalRegion()).forEach(region -> {
 			executor.execute(() -> {
-				log.info("Retriving instance details for region {}", region);
+				log.info("Retrieving instance details for region {}", region);
 				try {
 					models.addAll(pullEC2DetailsPerRegion(credentialsProvider, region, scrape));
 					scrape.setStatus(ScrapeService.ScrapeStatus.COMPLETE.name());

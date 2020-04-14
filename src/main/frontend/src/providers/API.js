@@ -14,7 +14,7 @@ class API {
   }
 
   static getHeaders() {
-    return { headers: { 'X-AUTH-TOKEN': Cookies.get('apiToken'), 'Content-Type': 'application/json' } };
+    return { headers: { 'Content-Type': 'application/json' } };
   }
 
   static get(path, id, options = {}) {
