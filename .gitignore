@@ -5,6 +5,7 @@ target/
 !**/src/test/**
 src/main/frontend/node_modules/
 src/main/resources/static/ui/*.js
+src/main/resources/static/ui/index.html
 
 ### STS ###
 .apt_generated
@@ -19,3 +20,4 @@ src/main/resources/static/ui/*.js
 ### VS Code ###
 .vscode/
 .idea
+

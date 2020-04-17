@@ -30,7 +30,6 @@ class API {
 
   static logout() {
     axios.post('/logout').then((resp) => {
-      Cookies.remove('apiToken');
       window.location = resp.data.redirect;
     });
   }

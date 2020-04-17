@@ -68,7 +68,8 @@ const ScrapesTable = (props) => {
                 scrapes.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((scrape) => (
                   <TableRow className={classes.tableRow} hover key={scrape.id}>
                     <TableCell>
-                      <NavLink to={`/scrape/${scrape.id}/${scrape.resourceType}`}>{scrape.id}</NavLink>
+                      { scrape.status === 'COMPLETE' && <NavLink to={`/scrape/${scrape.id}/${scrape.resourceType}`}>{scrape.id}</NavLink> }
+                      { scrape.status !== 'COMPLETE' && scrape.id }
                     </TableCell>
                     <TableCell>{scrape.resourceType}</TableCell>
                     <TableCell>{scrape.status}</TableCell>
