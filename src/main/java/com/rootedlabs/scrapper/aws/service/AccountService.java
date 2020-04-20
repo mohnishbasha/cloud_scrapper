@@ -27,7 +27,6 @@ package com.rootedlabs.scrapper.aws.service;
 
 import java.time.LocalDate;
 
-import com.rootedlabs.scrapper.aws.entities.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -35,7 +34,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.rootedlabs.scrapper.aws.entities.Account;
 import com.rootedlabs.scrapper.aws.repo.AccountRepository;
+import com.rootedlabs.scrapper.aws.security.CryptoUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,6 +49,9 @@ public class AccountService implements UserDetailsService {
 	
 	@Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	@Autowired
+	private CryptoUtil crypto;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -65,6 +69,8 @@ public class AccountService implements UserDetailsService {
 
 	public void createNewAccount(Account account) {
 		account.setPassword(bCryptPasswordEncoder.encode(account.getPassword())); 
+		account.setAccessKey(crypto.encrypt(account.getAccessKey()));
+		account.setSecretAccessKey(crypto.encrypt(account.getSecretAccessKey()));
 		account.setCreatedDate(LocalDate.now());
 		repo.save(account);
 		log.debug("Account created {}",account);

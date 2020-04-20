@@ -94,7 +94,7 @@ public class EC2 implements Serializable {
 	@Column(name = "CORE_COUNT")
 	private String coreCount;
 
-	@JsonIgnore
+	@JsonProperty("tags_str")
 	@Column(name = "TAGS", length=2000)
 	private String tags;
 

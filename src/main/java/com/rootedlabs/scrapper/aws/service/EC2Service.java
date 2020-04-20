@@ -45,6 +45,7 @@ import com.rootedlabs.scrapper.aws.entities.Account;
 import com.rootedlabs.scrapper.aws.entities.EC2;
 import com.rootedlabs.scrapper.aws.entities.Scrape;
 import com.rootedlabs.scrapper.aws.repo.EC2Repository;
+import com.rootedlabs.scrapper.aws.security.CryptoUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
@@ -67,6 +68,9 @@ public class EC2Service {
 
 	@Autowired
 	private ScrapeService scrapeService;
+	
+	@Autowired
+	private CryptoUtil crypto;
 
 	private ExecutorService executor = Executors.newFixedThreadPool(10);
 	
@@ -75,7 +79,7 @@ public class EC2Service {
 
 	@Async
 	public void scrapeResources(Account account, Scrape scrape) {
-		AwsCredentials credentials = AwsBasicCredentials.create(account.getAccessKey(), account.getSecretAccessKey());
+		AwsCredentials credentials = AwsBasicCredentials.create(crypto.decrypt(account.getAccessKey()), crypto.decrypt(account.getSecretAccessKey()));
 		AwsCredentialsProvider credentialsProvider = StaticCredentialsProvider.create(credentials);
 		List<EC2> models = Collections.synchronizedList(new ArrayList<>());
 

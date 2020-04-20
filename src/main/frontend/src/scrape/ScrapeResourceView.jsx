@@ -36,7 +36,6 @@ const ScrapeResourceView = (props) => {
     }, {});
     //  debugger;
     setFiltered(out);
-    // console.log(out);
   };
 
   return (
@@ -45,7 +44,7 @@ const ScrapeResourceView = (props) => {
       <GroupChip options={attributes} onTagChange={onTagChange} />
       <Box p={1.5} />
       {
-       // eslint-disable-next-line max-len
+
        Object.keys(filtered).map((key) => (
          <>
            <Box border={1} p={1.5} flexDirection="column" display="flex">
@@ -61,7 +60,6 @@ const ScrapeResourceView = (props) => {
 };
 
 ScrapeResourceView.propTypes = {
-  // match: PropTypes.shape({ params: PropTypes.objectOf.isRequired }).isRequired,
   ec2Data: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 

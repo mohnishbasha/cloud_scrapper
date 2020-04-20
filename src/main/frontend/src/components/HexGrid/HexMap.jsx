@@ -1,16 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Box } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import _ from 'lodash';
 import isArray from 'lodash/isArray';
-import times from 'lodash/times';
 import HexagonGrid from './HexGrid';
-
-const section = {
-  height: '100%',
-  paddingTop: 5,
-  backgroundColor: '#fff',
-};
 
 const HexMap = (props) => {
   const {

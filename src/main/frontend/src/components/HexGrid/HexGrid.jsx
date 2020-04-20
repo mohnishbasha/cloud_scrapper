@@ -33,8 +33,6 @@ const HexagonGrid = (props) => {
     gridHeight,
     gridWidth,
     hexProps,
-    x,
-    y,
   } = props;
 
   const [state, setState] = useState({

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 class API {
   static createUrl(path, options = {}) {
@@ -10,7 +11,7 @@ class API {
 
     const queryString = queryParams.join('&');
     const withQueryString = queryString === '' ? `/${path}` : `/${path}?${queryString}`;
-    return `/api${withQueryString}`;
+    return `api${withQueryString}`;
   }
 
   static getHeaders() {
@@ -29,7 +30,7 @@ class API {
   }
 
   static logout() {
-    axios.post('/logout').then((resp) => {
+    axios.post('/logout', null, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then((resp) => {
       window.location = resp.data.redirect;
     });
   }

@@ -3,20 +3,20 @@ import API from './API';
 class ScrapeProvider extends API {
   constructor() {
     super();
-    this.resource = 'scrapes';
-    this._resource = 'scrape';
+    this.resources = 'scrapes';
+    this.resource = 'scrape';
   }
 
   getScrapes() {
-    return API.get(this.resource);
+    return API.get(this.resources);
   }
 
   createScrape(data) {
-    return API.post(this.resource, data);
+    return API.post(this.resources, data);
   }
 
   getEC2ByScrape(id) {
-    return API.get(`${this._resource}/${id}/ec2s`);
+    return API.get(`${this.resource}/${id}/ec2s`);
   }
 }
 export default new ScrapeProvider();

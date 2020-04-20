@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { TextField } from '@material-ui/core';
@@ -14,7 +13,7 @@ const GroupText = (params, disabled) => (
 );
 
 const GroupChip = (props) => {
-  const [disabled, isDisabled] = useState(false);
+  const [disabled] = useState(false);
   const { options, onTagChange } = props;
 
   return (
