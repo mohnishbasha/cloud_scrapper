@@ -28,6 +28,7 @@ package com.rootedlabs.scrapper.aws.entities;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -124,7 +125,12 @@ public class EC2 implements Serializable {
 	@Transient
 	@JsonProperty("tags")
 	public Map<String, String> tagsAsJson() {
-		return Arrays.asList(tags.split(",")).stream().map(s -> s.split("="))
-				.collect(Collectors.toMap(k -> k[0], v -> v[1]));
+		Map<String, String> result = new HashMap<>();
+		if (!tags.isBlank()) {
+			result = Arrays.asList(tags.split(",")).stream().map(s -> s.split("=")).collect(Collectors.toMap(k -> k[0], v -> {
+				return v.length > 1 ? v[1] : "";
+			}));
+		}
+		return result;
 	}
 }

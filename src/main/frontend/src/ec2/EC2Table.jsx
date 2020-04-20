@@ -65,9 +65,9 @@ const EC2Table = (props) => {
             <TableBody>
               {
                 // eslint-disable-next-line max-len
-                ec2s.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((ec2) => (
+                ec2s.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((ec2, key) => (
                   <TableRow className={classes.tableRow} hover key={ec2.id}>
-                    <TableCell>{ec2.id}</TableCell>
+                    <TableCell>{(page * rowsPerPage) + key + 1}</TableCell>
                     <TableCell>{ec2.instanceType}</TableCell>
                     <TableCell>{ec2.region}</TableCell>
                     <TableCell>{ec2.state}</TableCell>

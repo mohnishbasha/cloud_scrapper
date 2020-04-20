@@ -67,15 +67,16 @@ public class WebController {
 	public String login() {
 		return "login";
 	}
-	@GetMapping("/login-error")
-    public String loginError(Model model) {
-        model.addAttribute("loginError", true);
-        return "login";
-    }
 
-	@GetMapping(value = "/dashboard")
+	@GetMapping("/login-error")
+	public String loginError(Model model) {
+		model.addAttribute("loginError", true);
+		return "login";
+	}
+
+	@GetMapping(value = {"/ui/dashboard","/ui/scrape/**",})
 	public String dashboard() {
-		return "dashboard";
+		return "forward:/ui/index.html";
 	}
 
 	@GetMapping(value = "/register")
@@ -111,9 +112,10 @@ public class WebController {
 
 		return modelAndView;
 	}
+
 	@GetMapping("/error ")
 	public String errorPage(HttpRequest req) {
-		log.debug("{}",req);
+		log.debug("{}", req);
 		return "register";
 	}
 }

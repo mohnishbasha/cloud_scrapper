@@ -30,17 +30,19 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import com.rootedlabs.scrapper.aws.entities.EC2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.rootedlabs.scrapper.aws.entities.Account;
+import com.rootedlabs.scrapper.aws.entities.EC2;
 import com.rootedlabs.scrapper.aws.entities.Scrape;
 import com.rootedlabs.scrapper.aws.repo.EC2Repository;
 
@@ -67,16 +69,18 @@ public class EC2Service {
 	private ScrapeService scrapeService;
 
 	private ExecutorService executor = Executors.newFixedThreadPool(10);
+	
+	@Value("#{'${aws.regions}'.split(',')}") 
+	private List<Region> selectedRegions = new ArrayList<>();
 
 	@Async
 	public void scrapeResources(Account account, Scrape scrape) {
-
 		AwsCredentials credentials = AwsBasicCredentials.create(account.getAccessKey(), account.getSecretAccessKey());
 		AwsCredentialsProvider credentialsProvider = StaticCredentialsProvider.create(credentials);
 		List<EC2> models = Collections.synchronizedList(new ArrayList<>());
 
-		// Region.regions().stream().filter(r -> !r.isGlobalRegion()).forEach(region -> {
-		Region.regions().stream().filter(r -> !r.isGlobalRegion()).forEach(region -> {
+		CountDownLatch latch = new CountDownLatch(selectedRegions.size());
+		selectedRegions.forEach(region -> {
 			executor.execute(() -> {
 				log.info("Retrieving instance details for region {}", region);
 				try {
@@ -86,13 +90,13 @@ public class EC2Service {
 					log.error("Error retrieving details for region {}. error {}", region, e.getMessage());
 					scrape.setStatus(ScrapeService.ScrapeStatus.FAILED.name());
 				}
+				latch.countDown();
 			});
 		});
-		executor.shutdown();
 		try {
-			executor.awaitTermination(5, TimeUnit.MINUTES);
+			latch.await(2, TimeUnit.MINUTES);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			log.error("InterruptedException",e);
 		}
 		log.info("list {}", models);
 		scrapeService.update(scrape);
